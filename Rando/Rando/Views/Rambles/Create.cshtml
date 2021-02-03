@@ -1,0 +1,88 @@
+﻿@model Rando.Models.Ramble
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Ramble</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddRamble">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HikingPhotoUrl" class="control-label"></label>
+                <input asp-for="HikingPhotoUrl" class="form-control" />
+                <span asp-validation-for="HikingPhotoUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Region" class="control-label"></label>
+                <input asp-for="Region" class="form-control" />
+                <span asp-validation-for="Region" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartLatitude" class="control-label"></label>
+                <input asp-for="DepartLatitude" class="form-control" />
+                @*<span asp-validation-for="DepartLatitude" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartLongitude" class="control-label"></label>
+                <input asp-for="DepartLongitude" class="form-control" />
+                @*<span asp-validation-for="DepartLongitude" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Distance" class="control-label"></label>
+                <input asp-for="Distance" class="form-control" />
+                @*<span asp-validation-for="Distance" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="HeightDifferencePositive" class="control-label"></label>
+                <input asp-for="HeightDifferencePositive" class="form-control" />
+                @*<span asp-validation-for="HeightDifferencePositive" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="HeightDifferenceNegative" class="control-label"></label>
+                <input asp-for="HeightDifferenceNegative" class="form-control" />
+                @*<span asp-validation-for="HeightDifferenceNegative" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                @*<span asp-validation-for="Duration" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Difficulty" class="control-label"></label>
+                <input asp-for="Difficulty" class="form-control" />
+                <span asp-validation-for="Difficulty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="AddRamble" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
