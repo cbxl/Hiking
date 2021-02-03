@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Rando.Models.Ramble>
+@{
+    ViewData["Title"] = "Index";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4 mb-5">Bienvenu aux passionnés de rando !</h1>
+</div>
+    <div class="row">    
+            <img src="https://cdn.pixabay.com/photo/2017/07/24/12/43/schrecksee-2534484_960_720.jpg" class="w-100"/>
+    </div>
+<div class="container my-5">
+    <h2 class="text-center my-3">Randonnées récentes</h2>
+    @foreach (var item in Model)
+    {
+        <div class="row my-2">
+            <div class="card col-md-10 my-4">
+                <div class="row">
+                    <div class="col-md-4 my-auto">
+                        <img src="@Html.DisplayFor(modelItem => item.HikingPhotoUrl)" alt="@Html.DisplayFor(modelItem => item.Title)" style="width: 15rem;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                            <p class="card-text">Difficulté : @Html.DisplayFor(modelItem => item.Difficulty)</p>
+                            <p class="card-text">Distance : @Html.DisplayFor(modelItem => item.Distance) km</p>
+                            <p class="card-text">Durée : @Html.DisplayFor(modelItem => item.Duration)</p>
+                            <p class="card-text"><small class="text-muted">Départ : @Html.DisplayFor(modelItem => item.Region) - @Html.DisplayFor(modelItem => item.City)</small></p>
+                            <a asp-action="Details" asp-route-id="@item.Id">Voir la rando</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
 </div>

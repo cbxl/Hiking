@@ -1,0 +1,84 @@
+﻿@using Rando.Models;
+@model Ramble;
+
+@{
+    ViewData["Title"] = "Ramble Opinion";
+}
+
+<h1>@Html.DisplayFor(model => model.Title)</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Region)</h4>
+    <div class="card mb-12">
+        <div class="row">
+            <div class="col-sm-3">
+                Distance : @Html.DisplayFor(model => model.Distance) km
+            </div>
+            <div class="col-sm-3">
+                Durée moyenne : @Html.DisplayFor(model => model.Duration) h
+            </div>
+            <div class="col-sm-3">
+                Difficulté : @Html.DisplayFor(model => model.Difficulty)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                Dénivelé positif : @Html.DisplayFor(model => model.HeightDifferencePositive) m
+            </div>
+            <div class="col-sm-3">
+                Dénivelé positif : @Html.DisplayFor(model => model.HeightDifferenceNegative) m
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                Région : @Html.DisplayFor(model => model.Region)
+            </div>
+            <div class="col-sm-3">
+                Commune : @Html.DisplayFor(model => model.City)
+            </div>
+            <div class="col-sm-3">
+                Latitude : @Html.DisplayFor(model => model.DepartLatitude)
+            </div>
+            <div class="col-sm-3">
+                Longitude : @Html.DisplayFor(model => model.DepartLongitude)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Description
+        </div>
+        <div class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+            <img src="@Html.DisplayFor(model => model.HikingPhotoUrl)" style="width: 20rem;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Avis
+        </div>
+        @if(Model.Opinions != null)
+        {
+            @foreach (Rando.Models.Opinion opinion in Model.Opinions)
+            {
+                <div class="card mb-10">
+                    <p>@opinion.Score /5</p>
+                    <p>@opinion.CreatedAt /5</p>
+                    <p>@opinion.Comment /5</p>
+                    <p>@opinion.User.Pseudo /5</p>
+                </div>
+            }
+        }
+
+    </div>
+    <div class="row">
+        <a asp-action="Index">Donnez votre avis</a>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Retour</a>
+</div>
