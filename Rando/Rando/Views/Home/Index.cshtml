@@ -4,7 +4,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4 mb-5">Bienvenu aux passionnés de rando !</h1>
+    <h1 class="display-4 mb-5">Bienvenue aux passionnés de rando !</h1>
 </div>
     <div class="row">    
             <img src="https://cdn.pixabay.com/photo/2017/07/24/12/43/schrecksee-2534484_960_720.jpg" class="w-100"/>
@@ -26,7 +26,7 @@
                             <p class="card-text">Distance : @Html.DisplayFor(modelItem => item.Distance) km</p>
                             <p class="card-text">Durée : @Html.DisplayFor(modelItem => item.Duration)</p>
                             <p class="card-text"><small class="text-muted">Départ : @Html.DisplayFor(modelItem => item.Region) - @Html.DisplayFor(modelItem => item.City)</small></p>
-                            <a asp-action="Details" asp-route-id="@item.Id">Voir la rando</a>
+                            <a asp-controller="Rambles" asp-action="Details" asp-route-id="@item.Id">Voir la rando</a>
                         </div>
                     </div>
                 </div>
