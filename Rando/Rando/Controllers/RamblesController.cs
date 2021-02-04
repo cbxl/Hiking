@@ -18,18 +18,26 @@ namespace Rando.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly OpinionRepository _opinionRepository;
+        private readonly RambleRepository _rambleRepository;
         private readonly UserManager<User> _userManager;
 
-        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, UserManager<User> userManager)
+        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, RambleRepository rambleRepository, UserManager<User> userManager)
         {
             _context = context;
             _opinionRepository = opinionRepository;
+            _rambleRepository = rambleRepository;
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Rambles.ToListAsync());
+            var rambles = from r in _context.Rambles
+                          select r;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                rambles = rambles.Where(search => search.Title.Contains(searchString));
+            }
+            return View(await rambles.ToListAsync());
         }
 
         public async Task<IActionResult> Details(Guid? id)
@@ -40,11 +48,17 @@ namespace Rando.Controllers
 
             return View(model);
         }
-
         public IActionResult Opinions(Ramble ramble)
         {
             IQueryable<Opinion> opinions = _opinionRepository.FindAllByRamble(ramble);
             return View(opinions);
+        }
+
+        [HttpGet]
+        public IActionResult FilterDifficulty()
+        {
+            IQueryable<Ramble> rambles = _rambleRepository.FindAllRamblesByDifficultyOne();
+            return View(rambles);
         }
 
         [Authorize]
