@@ -21,6 +21,6 @@ namespace Rando.Models
         public Double Duration { get; set; }
         public Int32 Difficulty { get; set; }
         public User User { get; set; }
-        public ICollection<Opinion> Opinions { get; set; }
+        public virtual ICollection<Opinion> Opinions { get; set; }
     }
 }
