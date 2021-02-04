@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Rando.Models.Ramble>
+﻿@*@model IEnumerable<Rando.Models.Ramble>*@
+@model Rando.ViewModels.RamblesListDifficultyViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +7,48 @@
 <div class="container my-5">
     <h1>Trouvez votre future randonnée</h1>
 
-    @foreach (var item in Model)
+    <div class="row my-2">
+        <div class="card col-md-10 my-4">
+            <div class="row ml-3">
+                <h4>Filtres</h4>
+            </div>
+            <div class="row mx-5 my-5">
+                <form asp-action="Index" method="get">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <label>Recherche par titre</label>
+                            </div>
+                            <input type="text" name="SearchString" />
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <div class="row">
+                                <label>Difficulté</label>
+                            </div>
+                            <div class="row">
+                                <select name="RambleDifficulty" asp-items="Model.Difficulties">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <div class="row">
+                                <label>Région</label>
+                            </div>
+                            <div class="row">
+                                <select name="RambleRegion" asp-items="Model.Regions">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Chercher" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model.Rambles)
     {
         <div class="row my-2">
             <div class="card col-md-10 my-4">
@@ -28,8 +70,8 @@
             </div>
         </div>
     }
-            <p>
-                <a asp-action="Create">Ajouter une randonnée</a>
-            </p>
-        </div>
+    <p>
+        <a asp-action="Create">Ajouter une randonnée</a>
+    </p>
+</div>
 

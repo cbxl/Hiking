@@ -18,18 +18,48 @@ namespace Rando.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly OpinionRepository _opinionRepository;
+        private readonly RambleRepository _rambleRepository;
         private readonly UserManager<User> _userManager;
 
-        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, UserManager<User> userManager)
+        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, RambleRepository rambleRepository, UserManager<User> userManager)
         {
             _context = context;
             _opinionRepository = opinionRepository;
+            _rambleRepository = rambleRepository;
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(String searchString, Int32 rambleDifficulty, String rambleRegion)
         {
-            return View(await _context.Rambles.ToListAsync());
+            IQueryable<Int32> difficultyQuery = from r in _context.Rambles
+                                               orderby r.Difficulty
+                                               select r.Difficulty;
+            
+            IQueryable<String> regionQuery = from r in _context.Rambles
+                                                orderby r.Region
+                                                select r.Region;            
+
+            var rambles = from r in _context.Rambles
+                          select r;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                rambles = rambles.Where(search => search.Title.Contains(searchString));
+            }
+            if (rambleDifficulty > 0)
+            {
+                rambles = rambles.Where(diff => diff.Difficulty == rambleDifficulty);
+            }            
+            if (!string.IsNullOrEmpty(rambleRegion))
+            {
+                rambles = rambles.Where(r => r.Region == rambleRegion);
+            }
+            var rambleFilterView = new RamblesListDifficultyViewModel
+            {
+                Difficulties = new SelectList(await difficultyQuery.Distinct().ToListAsync()),
+                Regions = new SelectList(await regionQuery.Distinct().ToListAsync()),
+                Rambles = await rambles.ToListAsync()
+            };
+            return View(rambleFilterView);
         }
 
         public async Task<IActionResult> Details(Guid? id)
@@ -40,11 +70,17 @@ namespace Rando.Controllers
 
             return View(model);
         }
-
         public IActionResult Opinions(Ramble ramble)
         {
             IQueryable<Opinion> opinions = _opinionRepository.FindAllByRamble(ramble);
             return View(opinions);
+        }
+
+        [HttpGet]
+        public IActionResult FilterDifficulty()
+        {
+            IQueryable<Ramble> rambles = _rambleRepository.FindAllRamblesByDifficultyOne();
+            return View(rambles);
         }
 
         [Authorize]
