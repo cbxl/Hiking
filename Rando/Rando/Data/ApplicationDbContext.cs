@@ -8,8 +8,8 @@ using System.Text;
 
 namespace Rando.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
-    {
+    public class ApplicationDbContext : IdentityDbContext<User>    {
+        
         public DbSet<Opinion> Opinions { get; set; }
         public DbSet<Ramble> Rambles { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

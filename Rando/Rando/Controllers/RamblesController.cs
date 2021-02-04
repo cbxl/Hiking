@@ -10,19 +10,20 @@ using Microsoft.EntityFrameworkCore;
 using Rando.Data;
 using Rando.Models;
 using Rando.Repository;
+using Rando.ViewModels;
 
 namespace Rando.Controllers
 {
     public class RamblesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        //private readonly OpinionRepository _opinionRepository;
+        private readonly OpinionRepository _opinionRepository;
         private readonly UserManager<User> _userManager;
 
-        public RamblesController(ApplicationDbContext context, UserManager<User> userManager)
+        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, UserManager<User> userManager)
         {
             _context = context;
-            //_opinionRepository = opinionRepository;
+            _opinionRepository = opinionRepository;
             _userManager = userManager;
         }
 
@@ -33,19 +34,18 @@ namespace Rando.Controllers
 
         public async Task<IActionResult> Details(Guid? id)
         {
-            Ramble ramble = await _context.Rambles.FirstOrDefaultAsync(r => r.Id == id);            
-            if (ramble == null)
-            {
-                return NotFound();
-            }
-            return View(ramble);
+            var model = new RamblePageViewModel();            
+            model.Ramble = await _context.Rambles.FirstOrDefaultAsync(r => r.Id == id);
+            model.Opinions = _opinionRepository.FindAllByRamble(model.Ramble);
+
+            return View(model);
         }
 
-        //public IActionResult Opinions(Ramble ramble)
-        //{
-        //    IQueryable<Opinion> opinions = _opinionRepository.FindAllByRamble(ramble);
-        //    return View(opinions);
-        //}
+        public IActionResult Opinions(Ramble ramble)
+        {
+            IQueryable<Opinion> opinions = _opinionRepository.FindAllByRamble(ramble);
+            return View(opinions);
+        }
 
         [Authorize]
         [HttpGet]
@@ -81,28 +81,21 @@ namespace Rando.Controllers
             _context.SaveChanges();
             IEnumerable<Ramble> userRambles = _context.FindRamblesByUser(connected);
             return View("Index", userRambles);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult AddOpinion(Ramble givenRamble)
-        {
-            Ramble ramble = _context.Rambles.SingleOrDefault(r => r.Id == givenRamble.Id);
-            return View("AddOpinion", ramble);
-        }
+        }     
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostOpinion(Opinion opinion, Ramble ramble)
+        public async Task<IActionResult> PostOpinion([FromForm] Opinion opinion)
         {
-            User connected = await _userManager.GetUserAsync(this.User);
-            Ramble actualRamble = _context.Rambles.SingleOrDefault(r => r.Id == ramble.Id);
+            User connected = await _userManager.GetUserAsync(this.User);            
             opinion.User = connected;
-            opinion.Ramble = actualRamble;
-            _context.Add(opinion);
+            opinion.CreatedAt = DateTime.Now;
+            _context.Update(opinion);       
             _context.SaveChanges();
-            return View("AddOpinion");
+            return View("OpinionAccepted");
         }
     }
 }
+    
+           
