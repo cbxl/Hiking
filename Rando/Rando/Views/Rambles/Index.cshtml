@@ -61,7 +61,7 @@
                             <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
                             <p class="card-text">Difficulté : @Html.DisplayFor(modelItem => item.Difficulty)</p>
                             <p class="card-text">Distance : @Html.DisplayFor(modelItem => item.Distance) km</p>
-                            <p class="card-text">Durée : @Html.DisplayFor(modelItem => item.Duration)</p>
+                            <p class="card-text">Durée : @Html.DisplayFor(modelItem => item.Duration) h</p>
                             <p class="card-text"><small class="text-muted">Départ : @Html.DisplayFor(modelItem => item.Region) - @Html.DisplayFor(modelItem => item.City)</small></p>
                             <a asp-action="Details" asp-route-id="@item.Id">Voir la rando</a>
                         </div>
