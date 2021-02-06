@@ -67,21 +67,12 @@ namespace Rando.Controllers
             var model = new RamblePageViewModel();            
             model.Ramble = await _context.Rambles.FirstOrDefaultAsync(r => r.Id == id);
             model.Opinions = _opinionRepository.FindAllByRamble(model.Ramble);
+            model.OpinionAverage = _opinionRepository.OpinionAverage(model.Opinions);
+            model.OpinionsNumber = model.Opinions.Count();
 
             return View(model);
         }
-        public IActionResult Opinions(Ramble ramble)
-        {
-            IQueryable<Opinion> opinions = _opinionRepository.FindAllByRamble(ramble);
-            return View(opinions);
-        }
 
-        [HttpGet]
-        public IActionResult FilterDifficulty()
-        {
-            IQueryable<Ramble> rambles = _rambleRepository.FindAllRamblesByDifficultyOne();
-            return View(rambles);
-        }
 
         [Authorize]
         [HttpGet]

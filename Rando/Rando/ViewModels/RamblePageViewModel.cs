@@ -10,6 +10,8 @@ namespace Rando.ViewModels
     {
         public IEnumerable<Opinion> Opinions { get; set; }
         public Opinion PostOpinion { get; set; }
+        public Double OpinionAverage { get; set; }
+        public Int32 OpinionsNumber { get; set; }
         public Ramble Ramble { get; set; }
         public User User { get; set; }
     }
