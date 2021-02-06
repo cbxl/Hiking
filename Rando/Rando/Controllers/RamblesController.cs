@@ -19,13 +19,15 @@ namespace Rando.Controllers
         private readonly ApplicationDbContext _context;
         private readonly OpinionRepository _opinionRepository;
         private readonly RambleRepository _rambleRepository;
+        private readonly StepRepository _stepRepository;
         private readonly UserManager<User> _userManager;
 
-        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, RambleRepository rambleRepository, UserManager<User> userManager)
+        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, RambleRepository rambleRepository, StepRepository stepRepository, UserManager<User> userManager)
         {
             _context = context;
             _opinionRepository = opinionRepository;
             _rambleRepository = rambleRepository;
+            _stepRepository = stepRepository;
             _userManager = userManager;
         }
 
@@ -67,6 +69,7 @@ namespace Rando.Controllers
             var model = new RamblePageViewModel();            
             model.Ramble = await _context.Rambles.FirstOrDefaultAsync(r => r.Id == id);
             model.Opinions = _opinionRepository.FindAllByRamble(model.Ramble);
+            model.Steps = _stepRepository.FindAllByRamble(model.Ramble);
             model.OpinionAverage = _opinionRepository.OpinionAverage(model.Opinions);
             model.OpinionsNumber = model.Opinions.Count();
 

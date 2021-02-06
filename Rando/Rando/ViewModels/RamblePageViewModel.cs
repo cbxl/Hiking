@@ -14,5 +14,6 @@ namespace Rando.ViewModels
         public Int32 OpinionsNumber { get; set; }
         public Ramble Ramble { get; set; }
         public User User { get; set; }
+        public IEnumerable <Step> Steps { get; set; }
     }
 }

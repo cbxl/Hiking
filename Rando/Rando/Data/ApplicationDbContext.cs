@@ -12,6 +12,7 @@ namespace Rando.Data
         
         public DbSet<Opinion> Opinions { get; set; }
         public DbSet<Ramble> Rambles { get; set; }
+        public DbSet<Step> Steps { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
