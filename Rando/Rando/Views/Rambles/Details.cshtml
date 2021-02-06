@@ -1,118 +1,168 @@
 ﻿@using Rando.Models;
 @using Rando.ViewModels;
 @model RamblePageViewModel;
+    <style type="text/css">
+        #map {
+            height: 310px;
+        }
+    </style>
 
-@{
-    ViewData["Title"] = "Ramble Opinion";
-}
-<div class="container my-5">
-    <h1>@Html.DisplayFor(model => model.Ramble.Title)</h1>
-
-    <div>
-        <h4 class="mt-2">@Html.DisplayFor(model => model.Ramble.Region)</h4>
-        <div class="card mb-12 px-3 my-5">
-            <div class="row my-3">
-                <div class="col-sm-4">
-                    <h6>Distance :</h6> @Html.DisplayFor(model => model.Ramble.Distance) km
-                </div>
-                <div class="col-sm-4">
-                    <h6>Dénivelé positif :</h6> @Html.DisplayFor(model => model.Ramble.HeightDifferencePositive) m
-                </div>
-                <div class="col-sm-4">
-                    <h6>Région :</h6> @Html.DisplayFor(model => model.Ramble.Region)
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class="col-sm-4">
-                    <h6>Durée moyenne :</h6> @Html.DisplayFor(model => model.Ramble.Duration) h
-                </div>
-                <div class="col-sm-4">
-                    <h6>Dénivelé positif :</h6> @Html.DisplayFor(model => model.Ramble.HeightDifferenceNegative) m
-                </div>
-                <div class="col-sm-4">
-                    <h6>Commune :</h6> @Html.DisplayFor(model => model.Ramble.City)
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class="col-sm-4">
-                    <h6>Difficulté :</h6> @Html.DisplayFor(model => model.Ramble.Difficulty)
-                </div> 
-                <div class="col-sm-4">
-                    <h6>Latitude :</h6> @Html.DisplayFor(model => model.Ramble.DepartLatitude)
-                </div>
-                <div class="col-sm-4">
-                    <h6>Longitude :</h6> @Html.DisplayFor(model => model.Ramble.DepartLongitude)
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <h4>Description</h4>
-        </div>
-        <div class="row">
-            <div class="px-3 col-10">
-                @Html.DisplayFor(model => model.Ramble.Description)
-            </div>
-        </div>            
-        <div class="row justify-content-center py-3">            
-            <img src="@Html.DisplayFor(model => model.Ramble.HikingPhotoUrl)" style="width: 35rem;" class="justify-content-center" />
-        </div>
-        <div class="row">
-            <h4>Avis</h4>
-            @if (@Model.Opinions != null)
-            { 
-        <div class="row my-2">
-            Note moyenne : @Html.DisplayFor(model => model.OpinionAverage)
-            @Html.DisplayFor(model => model.OpinionsNumber) avis
-            @foreach (Opinion opinion in Model.Opinions)
-            {
-                <div class="card col-md-10 my-4">
-                    <div class="card-body">
-                        <p class="card-text">Note : @opinion.Score /5</p>
-                        <p class="card-text">Date : @opinion.CreatedAt</p>
-                        <p class="card-text">Randonneur : @opinion.User.Pseudo</p>
-                        <p class="card-text">@opinion.Comment</p>
-                    </div>
-                </div>
-
-            }
-
-        </div>
-            }
-
-        </div>
-        <div class="row">
-            <h5>Donnez votre avis</h5>
-            <div class="col-md-4">
-                <form method="POST" asp-action="PostOpinion">
-                    <input type="hidden" name="Ramble.Id" value="@Html.DisplayFor(model => model.Ramble.Id)">
-                    <input type="hidden" name="Ramble.Title" value="@Html.DisplayFor(model => model.Ramble.Title)">
-                    <input type="hidden" name="Ramble.Description" value="@Html.DisplayFor(model => model.Ramble.Description)">
-                    <input type="hidden" name="Ramble.HikingPhotoUrl" value="@Html.DisplayFor(model => model.Ramble.HikingPhotoUrl)">
-                    <input type="hidden" name="Ramble.Region" value="@Html.DisplayFor(model => model.Ramble.Region)">
-                    <input type="hidden" name="Ramble.City" value="@Html.DisplayFor(model => model.Ramble.City)">
-                    <input type="hidden" name="Ramble.DepartLatitude" value="@Html.DisplayFor(model => model.Ramble.DepartLatitude)">
-                    <input type="hidden" name="Ramble.DepartLongitude" value="@Html.DisplayFor(model => model.Ramble.DepartLongitude)">
-                    <input type="hidden" name="Ramble.Distance" value="@Html.DisplayFor(model => model.Ramble.Distance)">
-                    <input type="hidden" name="Ramble.HeightDifferencePositive" value="@Html.DisplayFor(model => model.Ramble.HeightDifferencePositive)">
-                    <input type="hidden" name="Ramble.HeightDifferenceNegative" value="@Html.DisplayFor(model => model.Ramble.HeightDifferenceNegative)">
-                    <input type="hidden" name="Ramble.Duration" value="@Html.DisplayFor(model => model.Ramble.Duration)">
-                    <input type="hidden" name="Ramble.Difficulty" value="@Html.DisplayFor(model => model.Ramble.Difficulty)">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input name="Score" placeholder="Votre note" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <textarea name="Comment" placeholder="Votre message" class="col-md-12" style="height:200px;"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Poster" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-        </div>
+    @{
+        ViewData["Title"] = "Ramble Opinion";
+    }
+    <div class="container my-5">
+        <h1>@Html.DisplayFor(model => model.Ramble.Title)</h1>
 
         <div>
-            <a asp-action="Index">Retour</a>
+            <h4 class="mt-2">@Html.DisplayFor(model => model.Ramble.Region)</h4>
+            <div class="card mb-12 px-3 my-5">
+                <div class="row my-3">
+                    <div class="col-sm-4">
+                        <h6>Distance :</h6> @Html.DisplayFor(model => model.Ramble.Distance) km
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Dénivelé positif :</h6> @Html.DisplayFor(model => model.Ramble.HeightDifferencePositive) m
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Région :</h6> @Html.DisplayFor(model => model.Ramble.Region)
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-4">
+                        <h6>Durée moyenne :</h6> @Html.DisplayFor(model => model.Ramble.Duration) h
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Dénivelé positif :</h6> @Html.DisplayFor(model => model.Ramble.HeightDifferenceNegative) m
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Commune :</h6> @Html.DisplayFor(model => model.Ramble.City)
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-sm-4">
+                        <h6>Difficulté :</h6> @Html.DisplayFor(model => model.Ramble.Difficulty)
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Latitude :</h6> @Html.DisplayFor(model => model.Ramble.DepartLatitude)
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Longitude :</h6> @Html.DisplayFor(model => model.Ramble.DepartLongitude)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h4>Description</h4>
+            </div>
+            <div class="row">
+                <div class="px-3 col-10">
+                    @Html.DisplayFor(model => model.Ramble.Description)
+                </div>
+            </div>
+            <div class="row justify-content-center py-3">
+                <img src="@Html.DisplayFor(model => model.Ramble.HikingPhotoUrl)" style="width: 35rem;" class="justify-content-center" />
+            </div>
+            <div id="map"></div>
+
+
+
+            <div class="row">
+                <h4>Avis</h4>
+                @if (@Model.Opinions != null)
+                {
+                    <div class="row my-2">
+                        Note moyenne : @Html.DisplayFor(model => model.OpinionAverage)
+                        @Html.DisplayFor(model => model.OpinionsNumber) avis
+                        @foreach (Opinion opinion in Model.Opinions)
+                        {
+                            <div class="card col-md-10 my-4">
+                                <div class="card-body">
+                                    <p class="card-text">Note : @opinion.Score /5</p>
+                                    <p class="card-text">Date : @opinion.CreatedAt</p>
+                                    <p class="card-text">Randonneur : @opinion.User.Pseudo</p>
+                                    <p class="card-text">@opinion.Comment</p>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                }
+
+            </div>
+            <div class="row">
+                <h5>Donnez votre avis</h5>
+                <div class="col-md-4">
+                    <form method="POST" asp-action="PostOpinion">
+                        <input type="hidden" name="Ramble.Id" value="@Html.DisplayFor(model => model.Ramble.Id)">
+                        <input type="hidden" name="Ramble.Title" value="@Html.DisplayFor(model => model.Ramble.Title)">
+                        <input type="hidden" name="Ramble.Description" value="@Html.DisplayFor(model => model.Ramble.Description)">
+                        <input type="hidden" name="Ramble.HikingPhotoUrl" value="@Html.DisplayFor(model => model.Ramble.HikingPhotoUrl)">
+                        <input type="hidden" name="Ramble.Region" value="@Html.DisplayFor(model => model.Ramble.Region)">
+                        <input type="hidden" name="Ramble.City" value="@Html.DisplayFor(model => model.Ramble.City)">
+                        <input type="hidden" name="Ramble.DepartLatitude" value="@Html.DisplayFor(model => model.Ramble.DepartLatitude)">
+                        <input type="hidden" name="Ramble.DepartLongitude" value="@Html.DisplayFor(model => model.Ramble.DepartLongitude)">
+                        <input type="hidden" name="Ramble.Distance" value="@Html.DisplayFor(model => model.Ramble.Distance)">
+                        <input type="hidden" name="Ramble.HeightDifferencePositive" value="@Html.DisplayFor(model => model.Ramble.HeightDifferencePositive)">
+                        <input type="hidden" name="Ramble.HeightDifferenceNegative" value="@Html.DisplayFor(model => model.Ramble.HeightDifferenceNegative)">
+                        <input type="hidden" name="Ramble.Duration" value="@Html.DisplayFor(model => model.Ramble.Duration)">
+                        <input type="hidden" name="Ramble.Difficulty" value="@Html.DisplayFor(model => model.Ramble.Difficulty)">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input name="Score" placeholder="Votre note" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <textarea name="Comment" placeholder="Votre message" class="col-md-12" style="height:200px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Poster" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-action="Index">Retour</a>
+            </div>
         </div>
     </div>
-</div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
+
+    <script>
+        var steps = {
+            "Départ": { "latitude": 42.87416, "longitude": 0.50079 },
+            "Etape 1": { "latitude": 42.87364, "longitude": 0.48098 },
+            "Etape 2": { "latitude": 42.86843, "longitude": 0.47186 },
+            "Etape 3": { "latitude": 42.86159, "longitude": 0.46095 },
+            "Arrivée": { "latitude": 42.87414, "longitude": 0.50082 },
+        }
+        var points = [
+            [42.87416, 0.50079],
+            [42.87364, 0.48098],
+            [42.86843, 0.46095],
+            [42.86159, 0.50079],
+            [42.87414, 0.50082]
+        ];
+
+        var markersArray = [];
+        let rambleMap = L.map('map').setView([42.87415, 0.500808], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            minZoom: 5,
+            maxZoom: 25,
+        }).addTo(rambleMap);
+
+        for (step in steps) {
+            var markers = L.marker([steps[step].latitude, steps[step].longitude]).addTo(rambleMap);
+            markers.bindPopup("<p>" + step + "</p>");
+            markersArray.push(markers);
+        }
+        var markersGroup = new L.featureGroup(markersArray);
+        rambleMap.fitBounds(markersGroup.getBounds().pad(0.5));
+        var polyline = L.polyline([42.87416, 0.50079], [42.87364, 0.48098]).addTo(rambleMap);
+        
+
+
+    </script>
