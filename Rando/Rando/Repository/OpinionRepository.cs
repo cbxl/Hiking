@@ -26,9 +26,29 @@ namespace Rando.Repository
                 CreatedAt = DateTime.Now,
                 User = i.User
             });
+            //Int32 opinionSum = 0;
+            //foreach(Opinion o in allOpinions)
+            //{
+            //    opinionSum = opinionSum + o.Score;
+            //}
+
+            //Double opinionAverage = opinionSum / allOpinions.Count();
 
             return allOpinions;
         }
+
+        public Double OpinionAverage(IEnumerable<Opinion> opinions)
+        {
+            Int32 opinionSum = 0;
+            foreach (Opinion o in opinions)
+            {
+                opinionSum = opinionSum + o.Score;
+            }
+
+            return opinionSum / opinions.Count();
+        }
+
+         
 
     }
 }
