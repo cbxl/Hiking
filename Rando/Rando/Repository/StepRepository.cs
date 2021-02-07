@@ -7,27 +7,26 @@ using System.Threading.Tasks;
 
 namespace Rando.Repository
 {
-    public class OpinionRepository
+    public class StepRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public OpinionRepository(ApplicationDbContext context)
+        public StepRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IQueryable<Opinion> FindAllByRamble(Ramble ramble)
+        public IQueryable<Step> FindAllByRamble(Ramble ramble)
         {
-            IQueryable<Opinion> opinions = _context.Opinions.Where(o => o.Ramble.Id == ramble.Id);
-            IQueryable<Opinion> allOpinions = opinions.Select(i => new Opinion
+            IQueryable<Step> steps = _context.Steps.Where(o => o.Ramble.Id == ramble.Id);
+            IQueryable<Step> allSteps = steps.Select(i => new Step
             {
-                Score = i.Score,
-                Comment = i.Comment,
-                CreatedAt = DateTime.Now,
-                User = i.User
+                Latitude = i.Latitude,
+                Longitude = i.Longitude,
+                Name = i.Name
             });
             
-            return allOpinions;
+            return allSteps;
         }
 
         public Double OpinionAverage(IEnumerable<Opinion> opinions)

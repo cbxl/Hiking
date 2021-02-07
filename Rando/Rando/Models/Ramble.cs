@@ -22,5 +22,7 @@ namespace Rando.Models
         public Int32 Difficulty { get; set; }
         public User User { get; set; }
         public virtual ICollection<Opinion> Opinions { get; set; }
+
+        public virtual ICollection<Step> Steps { get; set; }
     }
 }
