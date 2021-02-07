@@ -110,7 +110,7 @@ namespace Rando.Controllers
 
             _context.SaveChanges();
             IEnumerable<Ramble> userRambles = _context.FindRamblesByUser(connected);
-            return View("Index", userRambles);
+            return View("Remerciements");
         }     
 
         [Authorize]
@@ -123,7 +123,7 @@ namespace Rando.Controllers
             opinion.CreatedAt = DateTime.Now;
             _context.Update(opinion);       
             _context.SaveChanges();
-            return View("OpinionAccepted");
+            return View("Remerciements");
         }
     }
 }
