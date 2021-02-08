@@ -180,21 +180,17 @@
         let lat;
         let longDepart = 0.50079;
         let long;
-        let name = "";
         let marker;
-        let points = new Array();
+        let itineraire = [];
         let polyline;
 
         function initialisationMap() {
-            rambleMap = L.map('map').setView([latDepart, longDepart], 11);
+            rambleMap = L.map('map').setView([latDepart, longDepart], 10);
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 minZoom: 5,
                 maxZoom: 25,
             }).addTo(rambleMap);
-            CreatePolyline("red");
-            polyline.addTo(rambleMap);
-
             @{ foreach (Step step in Model.Steps)
                {
                     <Text>
@@ -202,22 +198,13 @@
                 long = @Convert.ToString(Math.Round(step.Longitude, 6)).Replace(",", ".");
                 marker = L.marker([lat, long]).addTo(rambleMap);
                 marker.bindPopup("<p>" + lat + "</p>"+ "<p>" + long + "</p>");
-                points.push([lat, long]);
+                itineraire.push([lat, long]);
                     </Text>
                 }
-             }            
+             }
+            polyline = L.polyline(itineraire, { color: 'red' });
+            polyline.addTo(rambleMap);
         }
-        function CreatePolyline(colorChoice) {
-            var test = [
-                [42.87416, 0.50079],
-                [42.87364, 0.48098],
-                [42.86843, 0.47186]
-            ];
-            console.log(points)
-            console.log(test)
-            polyline = L.polyline(test, { color: colorChoice });
-            //polyline = L.polyline(markersArray, { color: colorChoice });       
-        };
         window.onload = function () {
             initialisationMap();
         };
