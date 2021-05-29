@@ -1,26 +1,4 @@
-﻿/* Navbar */
-.navbar-toggler {
-    border-radius: 50%;
-    background-color: black;
-    padding:10px;
-}
-
-.custom-toggler .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
-
-.container {
-    height: 100%
-}
-
-
-/* Home page */
+﻿/* Home page */
 .coverImage {
     margin-top: -90px;
     max-height: 100%;
@@ -49,7 +27,21 @@ a.navbar-brand {
     text-transform: uppercase;
 }
 
-/* Provide sufficient contrast against white background */
+/* General */
+h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+}
+
+h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 400;
+}
 a {
     color: #191308;
     text-decoration: none !important;
@@ -67,8 +59,6 @@ a {
   border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   font-size: 14px;
 }
@@ -94,8 +84,6 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   position: relative;
   min-height: 100%;
