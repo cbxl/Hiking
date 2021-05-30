@@ -12,6 +12,8 @@ Application de recherche de randonnées.
 ## Wireframes
 https://framer.com/projects/EasyRando--2LD07WKFqh07oKSbnFsI-iLUOG?node=KveBtVa89
 
+https://framer.com/projects/EasyRando-mobile--ryQ5jzjqdlMKfx79djuj-2yFw9?node=AgcuKp0gJ-page
+
 ## Charte graphique
 
 ### Colors
