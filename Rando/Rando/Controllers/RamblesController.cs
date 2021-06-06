@@ -111,7 +111,47 @@ namespace Rando.Controllers
             _context.SaveChanges();
             IEnumerable<Ramble> userRambles = _context.FindRamblesByUser(connected);
             return View("Remerciements");
-        }     
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Update()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> PutRamble(Guid id, [Bind("Id,Title,Description,HikingPhotoUrl,Region,City,DepartLatitude,DepartLongitude,Distance,HeightDifferencePositive,HeightDifferenceNegative,Duration,Difficulty")] Ramble ramble)
+        {
+            if (id != ramble.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(ramble);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RambleExists(ramble.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }                
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Remerciements");
+        }
 
         [Authorize]
         [HttpPost]
@@ -125,6 +165,12 @@ namespace Rando.Controllers
             _context.SaveChanges();
             return View("Remerciements");
         }
+
+        private bool RambleExists(Guid id)
+        {
+            return _context.Rambles.Any(e => e.Id == id);
+        }
+
     }
 }
     
