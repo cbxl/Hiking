@@ -146,6 +146,38 @@ namespace Rando.Controllers
             return View(ramble);
         }
 
+
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ramble = await _context.Rambles
+                .FirstOrDefaultAsync(r => r.Id == id);
+            if (ramble == null)
+            {
+                return NotFound();
+            }
+
+            return View(ramble);
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            Ramble ramble = await _context.Rambles.FindAsync(id);
+            if (ramble == null)
+            {
+                return NotFound();
+            }
+            _context.Rambles.Remove(ramble);
+            await _context.SaveChangesAsync();
+            return View("Remerciements");
+        }
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]

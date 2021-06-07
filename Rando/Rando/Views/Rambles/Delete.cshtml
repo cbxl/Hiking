@@ -1,0 +1,54 @@
+﻿@model Rando.Models.Ramble
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container my-5">
+    <h1>Supprimer la rando</h1>
+
+    <h3>Etes-vous sûr de vouloir supprimer cet article ?</h3>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Description" class="form-control" />
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input asp-for="HikingPhotoUrl" class="form-control" />
+                    </div>
+                </div>
+                <input type="hidden" asp-for="Region" />
+            </div>
+            <input type="hidden" asp-for="City" />
+            <input type="hidden" asp-for="DepartLatitude" />
+            <input type="hidden" asp-for="DepartLongitude" />
+            <input type="hidden" asp-for="Distance" />
+            <input type="hidden" asp-for="Duration" />
+            <input type="hidden" asp-for="HeightDifferenceNegative" />
+            <input type="hidden" asp-for="HeightDifferencePositive" />
+            <input type="hidden" asp-for="Difficulty" />
+            <div class="form-group">
+                <input type="submit" value="Valider" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Supprimer" class="btn btn-danger" />
+    </form>
+
+    <div>
+        <a asp-action="Index">Retour</a>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
