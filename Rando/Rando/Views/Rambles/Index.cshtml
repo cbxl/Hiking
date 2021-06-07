@@ -65,6 +65,7 @@
                             <p class="card-text"><small class="text-muted">Départ : @Html.DisplayFor(modelItem => item.Region) - @Html.DisplayFor(modelItem => item.City)</small></p>
                             <a asp-action="Details" asp-route-id="@item.Id">Voir la rando</a>
                             <a asp-action="Edit" asp-route-id="@item.Id">Modifier la rando</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
                         </div>
                     </div>
                 </div>
