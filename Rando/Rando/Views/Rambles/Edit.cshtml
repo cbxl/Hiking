@@ -1,0 +1,57 @@
+﻿@model Rando.Models.Ramble
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container my-5">
+    <h1>Modifier la rando</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label">Titre</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Description</label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="HikingPhotoUrl" class="control-label">Lien de la photo</label>
+                            <input asp-for="HikingPhotoUrl" class="form-control" />
+                            <span asp-validation-for="HikingPhotoUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="Region" />
+                </div>
+                <input type="hidden" asp-for="City" />
+                <input type="hidden" asp-for="DepartLatitude" />
+                <input type="hidden" asp-for="DepartLongitude" />
+                <input type="hidden" asp-for="Distance" />
+                <input type="hidden" asp-for="Duration" />
+                <input type="hidden" asp-for="HeightDifferenceNegative" />
+                <input type="hidden" asp-for="HeightDifferencePositive" />
+                <input type="hidden" asp-for="Difficulty" />               
+                <div class="form-group">
+                    <input type="submit" value="Valider" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Retour</a>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -116,14 +116,24 @@ namespace Rando.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Update()
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ramble = await _context.Rambles.FindAsync(id);
+            if (ramble == null)
+            {
+                return NotFound();
+            }
+            return View(ramble);
         }
 
         [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> PutRamble(Guid id, [Bind("Id,Title,Description,HikingPhotoUrl,Region,City,DepartLatitude,DepartLongitude,Distance,HeightDifferencePositive,HeightDifferenceNegative,Duration,Difficulty")] Ramble ramble)
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Description,HikingPhotoUrl,Region,City,DepartLatitude,DepartLongitude,Distance,HeightDifferencePositive,HeightDifferenceNegative,Duration,Difficulty")] Ramble ramble)
         {
             if (id != ramble.Id)
             {
@@ -147,10 +157,10 @@ namespace Rando.Controllers
                     {
                         throw;
                     }
-                }                
-                return RedirectToAction(nameof(Index));
+                }
+                return View("Remerciements");
             }
-            return View("Remerciements");
+            return View(ramble);
         }
 
         [Authorize]
