@@ -90,26 +90,9 @@ namespace Rando.Controllers
         public async Task<IActionResult> AddRamble(Ramble givenRamble)
         {
             User connected = await _userManager.GetUserAsync(this.User);
-            Ramble existingRamble = _context.Rambles.SingleOrDefault(ramble => ramble.Id == givenRamble.Id);
-            if (existingRamble != null)
-            {
-                if (existingRamble.User.Id == connected.Id)
-                {
-                    _context.Update(givenRamble);
-                }
-                else
-                {
-                    return Unauthorized("Vous n'avez pas les droits pour modifier cette rando");
-                }
-            }
-            else
-            {
-                givenRamble.User = connected;
-                _context.Add(givenRamble);
-            }
-
+            givenRamble.User = connected;
+            _context.Add(givenRamble);
             _context.SaveChanges();
-            IEnumerable<Ramble> userRambles = _context.FindRamblesByUser(connected);
             return View("Remerciements");
         }
 
