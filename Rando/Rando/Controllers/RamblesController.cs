@@ -22,7 +22,11 @@ namespace Rando.Controllers
         private readonly StepRepository _stepRepository;
         private readonly UserManager<User> _userManager;
 
-        public RamblesController(ApplicationDbContext context, OpinionRepository opinionRepository, RambleRepository rambleRepository, StepRepository stepRepository, UserManager<User> userManager)
+        public RamblesController(ApplicationDbContext context, 
+                                OpinionRepository opinionRepository, 
+                                RambleRepository rambleRepository, 
+                                StepRepository stepRepository, 
+                                UserManager<User> userManager)
         {
             _context = context;
             _opinionRepository = opinionRepository;
