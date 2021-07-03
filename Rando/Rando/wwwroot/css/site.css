@@ -1,5 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* Navbar */
 .navbar-toggler {
     border-radius: 50%;
     background-color: black;
@@ -16,9 +15,44 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+.container {
+    height: 100%
+}
+
+
+/* Home page */
+.coverImage {
+    margin-top: -90px;
+    max-height: 100%;
+    max-width: 100%;
+}
+.searchSection{
+    display: flex;
+    justify-content:center;
+}
+.searchBox {
+    position: absolute !important;  
+    background-color: white;
+    opacity: 0.7;
+    border-radius: 50%;
+    width: 450px;
+    height: 450px;
+    align-items:center;
+    padding: 30px;
+    margin-top: 10%;
+}
+.searchTitle {
+    text-align: center;
+    font-size: 72px;
+    margin-top: 25%;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+}
+
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #191308;
+    text-decoration: none !important;
 }
 
 .btn-primary {
